@@ -96,15 +96,15 @@ void GPIO_Lock_Pin(GPIO_Struct *Port, GPIO_Pin pin, uint8_t Lock_Unlock)
 	uint32_t state;
 	if (Lock_Unlock>0)
 	    {
-	    Port->GPIO_LCKR=(1 << pin);
-	    Port->GPIO_LCKR=~(1 << pin);
-	    Port->GPIO_LCKR=(1 << pin);
+	    Port->GPIO_LCKR|=(1 << pin);
+	    Port->GPIO_LCKR&=~(1 << pin);
+	    Port->GPIO_LCKR|=(1 << pin);
 	    state=Port->GPIO_LCKR;
 	    state=Port->GPIO_LCKR;
 	    }
 	else{
-		Port->GPIO_LCKR = (1 << pin);
-		Port->GPIO_LCKR = ~(1 << pin);
+		Port->GPIO_LCKR&=~(1 << pin);
+		Port->GPIO_LCKR|=(1 << pin);
 		state=Port->GPIO_LCKR;
 	    state=Port->GPIO_LCKR;
 	}
