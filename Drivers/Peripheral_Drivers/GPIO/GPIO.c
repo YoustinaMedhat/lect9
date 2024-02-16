@@ -88,10 +88,24 @@ void GPIO_Set_Pin(GPIO_Struct *Port, GPIO_Pin pin, uint8_t State)
 
 void GPIO_TogglePin(GPIO_Struct *Port, GPIO_Pin pin)
 {
-	//write your code here to toggle a GPIO pin
+	Port->GPIO_ODR^=pin;
 }
 
 void GPIO_Lock_Pin(GPIO_Struct *Port, GPIO_Pin pin, uint8_t Lock_Unlock)
-{
-	//write your code here to lock/unlock a GPIO Pin
+{//p175 in manual
+	uint32_t state;
+	if (Lock_Unlock>0)
+	    {
+	    Port->GPIO_LCKR=(1 << pin);
+	    Port->GPIO_LCKR=~(1 << pin);
+	    Port->GPIO_LCKR=(1 << pin);
+	    state=Port->GPIO_LCKR;
+	    state=Port->GPIO_LCKR;
+	    }
+	else{
+		Port->GPIO_LCKR = (1 << pin);
+		Port->GPIO_LCKR = ~(1 << pin);
+		state=Port->GPIO_LCKR;
+	    state=Port->GPIO_LCKR;
+	}
 }
